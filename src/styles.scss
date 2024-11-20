@@ -1,0 +1,184 @@
+
+@use "./typography.scss"; 
+@use "./colors.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+$breakpoint-phone:600px;
+$breakpoint-tablet:1000px;
+
+:root {
+    @include colors.use-colors();
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    display: grid;
+    font-family: "Roboto", sans-serif;
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+}
+
+.navigation-container {
+    box-sizing: border-box;
+    padding: 0 12px;
+    height: 100%;
+    width: 360px;
+    border-radius: 16px;
+    display: grid;
+    grid-auto-rows: min-content;
+    background-color: var(--md-sys-color-surface-container);
+    gap: 12px;
+
+    @media (#{$breakpoint-phone} < width <= #{$breakpoint-tablet}) {
+        width: 80px;
+        border-radius: 0;
+    }
+
+    @media (width <= #{$breakpoint-phone}) {
+        grid-auto-flow: column;
+        padding: 12px 0;
+        height: 80px;
+        width: 100%;
+        align-self: end;
+        border-radius: 0;
+    }
+}
+
+.navigation-headline {
+    @include typography.typography-headline();
+
+    color: var(--md-sys-color-on-surface-variant);
+    padding: 24px 16px;
+    
+    @media ( width <= #{$breakpoint-tablet}) {
+        display: grid;
+        place-content: center;
+        padding: 24px 0;
+    }
+
+    @media ( width <= #{$breakpoint-phone}) {
+        display: none;
+    }
+
+}
+
+.divider {
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 4px;
+
+    @media (width >= #{$breakpoint-phone}) {
+        margin: 16px;
+    }
+
+}
+
+.navigation-item {
+
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface-variant);
+    --_state-layer-display: none;
+  
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+    height: 56px;
+    width: 336px;
+    padding-left: 16px;
+    padding-right: 24px;
+    position: relative;
+    isolation: isolate;
+    display: grid;
+
+    @media (width > #{$breakpoint-tablet}) {
+        grid-template-columns: [icon-start] min-content
+            [icon-end label-start] 1fr
+            [label-end bglabel-start] min-content
+            [bglabel-end] ; 
+        grid-template-rows: [icon-start label-start bglabel-start] 1fr
+            [icon-end label-end bglabel-end]      
+    }
+
+    @media (width <= #{$breakpoint-tablet}) {
+        grid-template-columns: [icon-start label-start bglabel-start] 1fr
+        [icon-end label-end bglabel-end];
+        grid-template-rows: [icon-start bglabel-start] min-content
+            [icon-end bglabel-end label-start ] min-content
+            [label-end];
+        width: 56px;
+        height: 56px;
+        gap: 4px;
+        padding: 0;
+        place-items: center;
+        border-radius: 16px;
+    }
+
+    &:hover {
+        --_state-layer-display: block;
+        --icon-fill: 1;
+    }
+
+    &::after {
+        display: var(--_state-layer-display);
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: var(--md-sys-color-secondary-container);//currentColor;
+        z-index: -1;
+        border-radius: 28px;  
+        
+        @media (width <= #{$breakpoint-tablet}) {
+            height: 32px;
+        }
+    }
+
+    &__icon {
+        grid-row: icon;
+        grid-column: icon;
+
+        @media (width <= #{$breakpoint-tablet}) {
+            padding: 3px 0 0 0;  
+        }
+    }
+
+    &__label {
+        @include typography.typography-label();
+
+        grid-row: label;
+        grid-column: label; 
+    }
+
+    &__badge-label {
+        @include typography.typography-badge-label();
+
+        grid-row: bglabel;
+        grid-column: bglabel;
+        text-align: center;
+
+        @media (width <= #{$breakpoint-tablet}) {
+            @include typography.typography-badge-label-small();
+
+            height: 16px;
+            width: 16px;
+            align-self: start;
+            justify-self: end;
+            border-radius: 50%;
+            color: var(--md-sys-color-on-error);
+            background-color: var(--md-sys-color-error);
+        }
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' var(--icon-fill, 0),
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}

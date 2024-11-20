@@ -1,0 +1,50 @@
+@use "sass:map";
+$typography-map: (
+    "headline": ("line-height": 24px,
+        "size": 16px,
+        "tracking": 0.15px,
+        "weight": 500),
+    "label": ("line-height": 20px,
+        "size": 14px,
+        "tracking": 0.1px,
+        "weight": 500),
+    "badge-label": ("line-height": 20px,
+        "size": 14px,
+        "tracking": 0.25px,
+        "weight": 400),
+    "badge-label-small": ("line-height": 20px,
+        "size": 12px,
+        "tracking": 0.25px,
+        "weight": 500),
+);
+
+@mixin _private-apply-font($font-style) {
+    $font-map: map.get($typography-map, $font-style);
+
+    font-size: map.get($font-map, "size");
+    font-weight: map.get($font-map, "weight");
+    letter-spacing: map.get($font-map, "tracking");
+    line-height: map.get($font-map, "line-height");
+    margin: 0;
+    padding: 0;
+}
+
+@mixin typography-headline {
+    @include _private-apply-font("headline");
+}
+
+@mixin typography-label {
+    @include _private-apply-font("label");
+}
+
+@mixin typography-badge-label {
+    @include _private-apply-font("badge-label");
+}
+
+@mixin typography-label-active {
+    @include _private-apply-font("label-active");
+}
+
+@mixin typography-badge-label-small {
+    @include _private-apply-font("badge-label-small");
+}

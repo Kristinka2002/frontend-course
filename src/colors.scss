@@ -1,0 +1,52 @@
+@use "sass:map";
+$color-map: (
+  "--md-sys-color-surface": (
+    "light": rgb(248 249 255),
+    "dark":rgb(25 28 32)  
+  ),
+  "--md-sys-color-outline": (
+    "light": rgb(115 119 127),
+    "dark":  rgb(141 145 153)
+  ),
+  "--md-sys-color-surface-container": (
+    "light":rgb(236 238 244),
+    "dark":rgb(29 32 36)
+  ),
+  "--md-sys-color-secondary-container": (
+    "light": rgb(215 227 248),
+    "dark":rgb(59 72 88)
+  ),
+  "--md-sys-color-background": (
+    "light":rgb(248 249 255), 
+    "dark":rgb(17 20 24)
+  ),
+  "--md-sys-color-on-background": (
+    "light":rgb(25 28 32), 
+    "dark":rgb(225 226 232)
+  ),
+  "--md-sys-color-on-surface-variant": (
+    "light":rgb(67 71 78),
+    "dark":rgb(195 198 207)
+  ),
+  "--md-sys-color-error": (
+    "light":rgb(186 26 26),
+    "dark":rgb(255 180 171)
+  ),
+  "--md-sys-color-on-error": (
+    "light": rgb(255 255 255),
+    "dark": rgb(105 0 5)
+  ),
+  
+);
+
+@mixin set-colors($color-map) {
+  @each $color-name, $color in $color-map {
+    #{$color-name}: light-dark(map.get($color, "light"), map.get($color, "dark"));
+  }
+}
+
+@mixin use-colors(){
+    @include set-colors($color-map);
+    color-scheme: light dark;
+}
+
